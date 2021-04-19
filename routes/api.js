@@ -1,6 +1,7 @@
 "use strict";
 
-// const expect = require("chai").expect;
+// eslint-disable-next-line no-unused-vars
+const expect = require("chai").expect;
 const ConvertHandler = require("../controllers/convertHandler.js");
 
 module.exports = function (app) {
