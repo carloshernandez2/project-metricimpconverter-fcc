@@ -1,11 +1,12 @@
 "use strict";
 
-const expect = require("chai").expect;
+// const expect = require("chai").expect;
 const ConvertHandler = require("../controllers/convertHandler.js");
 
 module.exports = function (app) {
-  let convertHandler = new ConvertHandler();
+
   app.get("/api/convert", (req, res) => {
+    const convertHandler = new ConvertHandler();
     const { input } = req.query;
     const initNum = convertHandler.getNum(input),
       initUnit = convertHandler.getUnit(input),
@@ -18,13 +19,13 @@ module.exports = function (app) {
         returnUnit
       ),
       result =
-        initNum && initUnit
-          ? { initNum, initUnit, returnNum, returnUnit, string }
-          : initNum
-          ? "invalid unit"
-          : initUnit
-          ? "invalid number"
-          : "invalid number and unit";
+        initNum instanceof Error && initUnit instanceof Error
+          ? "invalid number and unit"
+          : initNum instanceof Error
+          ? initNum.message
+          : initUnit instanceof Error
+          ? initUnit.message
+          : { initNum, initUnit, returnNum, returnUnit, string }
 
     res.send(result);
   });

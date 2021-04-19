@@ -1,20 +1,19 @@
-const getNum = function (input) {
+const getUnit = function (input) {
   let result;
 
   const arr = input.split(/([0-9]+)/),
-    unformattedValue = arr.slice(0, arr.length - 1),
-    f = unformattedValue.find((element) => element === "/")
-      ? unformattedValue.join("").split("/")
-      : false,
-    num = !unformattedValue.length
-      ? 1
-      : f && f.length < 3
-      ? f.reduce((p, c) => p / c)
-      : Number(unformattedValue.join(""));
+    unformattedValue = arr[arr.length - 1].toLowerCase().replace(".", ""),
+    unit = unformattedValue.match(/^l$/)
+      ? unformattedValue.toUpperCase()
+      : unformattedValue.match(/^lbs$|^gal$|^mi$|^k[gm]$/)
+      ? unformattedValue
+      : false;
 
-  result = num;
+  result = unit;
 
   return result;
 };
 
-console.log(getNum("lb"));
+console.log(getUnit("2galo"));
+// let input = 'kg'
+// console.log(input.replace('.', ''))
